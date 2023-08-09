@@ -5,6 +5,7 @@ const app = express();
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const  authRoute  = require('./Routes/AuthRoute');
+const  productRoute  = require('./Routes/ProductRoute');
 
 const PORT = process.env.PORT || 5000;
 
@@ -19,15 +20,16 @@ mongoose.connect(process.env.MONGO_URL,{
 
 //middlewares
 app.use(cors({
-    origin:[process.env.FRONTEND_URL],
-    methods:["GET","POST","PUT","DELETE"]
-}))
+    origin:process.env.FRONTEND_URL,
+    credentials: true,
+  }));
 app.use(express.json());
 app.use(cookieParser())
 
 
 //Route
 app.use('/api/v1',authRoute)
+app.use('/api/v1',productRoute)
 
 
 
